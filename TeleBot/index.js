@@ -14,7 +14,7 @@ bot.onText(/\/calculate (.+)/, (msg, match) => {
     try {
         // Evaluate the expression safely
         const result = eval(expression);
-        bot.sendMessage(chatId, Result: ${result});
+        bot.sendMessage(chatId, `Result: ${result}`);
     } catch (error) {
         bot.sendMessage(chatId, 'Invalid expression. Please use a valid arithmetic expression.');
     }
@@ -29,6 +29,7 @@ bot.on('message', (msg) => {
         bot.sendMessage(chatId, 'Send me an arithmetic expression using /calculate command. Example: /calculate 2 + 2');
     }
 });
+
 
 
 
