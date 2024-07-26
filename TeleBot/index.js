@@ -7,7 +7,7 @@ const token = '6911484112:AAHd4u5vZ7lvwyayrgCT2F1CBZJmxqBssTg';
 const bot = new TelegramBot(token, { polling: true });
 
 // Listen for messages containing arithmetic expressions
-bot.onText(/\/calculate (.+)/, (msg, match) => {
+bot.onText(/\ (.+)/, (msg, match) => {
     const chatId = msg.chat.id;
     const expression = match[1]; // the captured arithmetic expression
 
