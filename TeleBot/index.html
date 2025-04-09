@@ -5,33 +5,35 @@
         <script>
 const TelegramBot = require('node-telegram-bot-api');
 
- // replace the value below with the Telegram token you receive from @BotFather
- //const token = '6911484112:AAHd4u5vZ7lvwyayrgCT2F1CBZJmxqBssTg';
+// Replace the value below with the Telegram token you receive from @BotFather
+const token = '6911484112:AAHd4u5vZ7lvwyayrgCT2F1CBZJmxqBssTg';
 
-// // Create a bot that uses 'polling' to fetch new updates
- const bot = new TelegramBot(token, {polling: true});
+// Create a bot that uses 'polling' to fetch new updates
+const bot = new TelegramBot(token, { polling: true });
 
-// // Matches "/echo [whatever]"
- bot.onText(/\/echo (.+)/, (msg, match) => {
-//   // 'msg' is the received Message from Telegram
-//   // 'match' is the result of executing the regexp above on the text content
-//   // of the message
+// Listen for messages containing arithmetic expressions
+bot.onText(/\ (.+)/, (msg, match) => {
+    const chatId = msg.chat.id;
+    const expression = match[1]; // the captured arithmetic expression
 
-  const chatId = msg.chat.id;
-   const resp = match[1]; // the captured "whatever"
+    try {
+        // Evaluate the expression safely
+        const result = eval(expression);
+        bot.sendMessage(chatId, `Result: ${result}`);
+    } catch (error) {
+        bot.sendMessage(chatId, 'Invalid expression. Please use a valid arithmetic expression.');
+    }
+});
 
-//   // send back the matched "whatever" to the chat
-  bot.sendMessage(chatId, resp);
- });
+// Listen for any kind of message
+bot.on('message', (msg) => {
+    const chatId = msg.chat.id;
 
-// // Listen for any kind of message. There are different kinds of
-// // messages.
- bot.on('message', (msg) => {
-   const chatId = msg.chat.id;
-
-//   // send a message to the chat acknowledging receipt of their message
-   bot.sendMessage(chatId, 'Received your message');
- });
+    // Send a message to the chat acknowledging receipt of their message
+    if (!msg.text.startsWith('/calculate')) {
+        bot.sendMessage(chatId, 'Send me an arithmetic expression using /calculate command. Example: /calculate 2 + 2');
+    }
+});
             
 </script>
     </body>
